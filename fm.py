@@ -1,0 +1,2 @@
+def fm():
+    return True
