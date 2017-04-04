@@ -2,9 +2,16 @@
 from __future__ import unicode_literals
 
 import cmd
-import sys
+
+import commands as cmds
 
 from utils.colorize import colorize, Colors
+
+commands = [
+    cmds.Genres,
+    cmds.Play,
+    cmds.Quit,
+]
 
 
 class Fm(cmd.Cmd):
@@ -25,8 +32,25 @@ class Fm(cmd.Cmd):
         colorize(Colors.GRAY, 'command to see all cmd.fm commands.')
     )
 
-    def do_quit(self, line):
-        sys.exit(0)
+    def __init__(self, *args, **kwargs):
+        for command in commands:
+            setattr(Fm, *command.bind_handler())
+            setattr(Fm, *command.bind_help())
+        cmd.Cmd.__init__(self, *args, **kwargs)
+
+    def do_help(self, arg):
+        if arg:
+            try:
+                fn = getattr(self, 'help_' + arg)
+            except AttributeError:
+                print colorize(Colors.RED, 'Command ') + colorize(Colors.YELLOW, arg) \
+                    + colorize(Colors.RED, ' not found. You can use ') \
+                    + 'help' + colorize(Colors.RED, ' command to see all available commands.')
+                return
+            fn()
+        else:
+            for command in commands:
+                print command.one_line_help()
 
 
 if __name__ == '__main__':
