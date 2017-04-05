@@ -11,7 +11,7 @@ class Play(Command):
 
     @staticmethod
     def handle(*args):
-        print('debug: play/p command output')
+        return 'debug: play/p command output'
 
 
 class P(Play):

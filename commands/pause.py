@@ -11,4 +11,4 @@ class Pause(Command):
 
     @staticmethod
     def handle(*args):
-        print('debug: pause command output')
+        return 'debug: pause command output'

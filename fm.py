@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals
 
 import cmd
 
@@ -26,18 +26,33 @@ class Fm(cmd.Cmd):
         colorize(Colors.GRAY, 'command to see all cmd.fm commands.')
     )
 
+    @classmethod
+    def _bind_handler(cls, cmd):
+        def fn(self, *args):
+            self.stdout_print(cmd.handle())
+        setattr(cls, 'do_' + cmd.name, fn)
+
+    @classmethod
+    def _bind_help(cls, cmd):
+        def fn(self, *args):
+            self.stdout_print(cmd.help())
+        setattr(cls, 'help_' + cmd.name, fn)
+
     def __init__(self, *args, **kwargs):
         for command in commands:
-            setattr(Fm, *command.bind_handler())
-            setattr(Fm, *command.bind_help())
+            Fm._bind_handler(command)
+            Fm._bind_help(command)
         cmd.Cmd.__init__(self, *args, **kwargs)
+
+    def stdout_print(self, text, end='\n'):
+        self.stdout.write(text + end)
 
     def do_help(self, arg):
         if arg:
             try:
                 fn = getattr(self, 'help_' + arg)
             except AttributeError:
-                print(
+                self.stdout_print(
                     colorize(Colors.RED, 'Command ') + colorize(Colors.YELLOW, arg)
                     + colorize(Colors.RED, ' not found. You can use ')
                     + 'help' + colorize(Colors.RED, ' command to see all available commands.')
@@ -46,10 +61,10 @@ class Fm(cmd.Cmd):
             fn()
         else:
             for command in commands:
-                print(command.one_line_help(), end='')
+                self.stdout_print(command.one_line_help(), end='')
 
     def default(self, arg):
-        print(colorize(Colors.RED, 'Unknown command ') + arg)
+        self.stdout_print(colorize(Colors.RED, 'Unknown command ') + arg)
 
     def emptyline(self):
         # Do not repeat last used command when user entered empty line

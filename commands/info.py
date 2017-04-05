@@ -11,7 +11,7 @@ class Info(Command):
 
     @staticmethod
     def handle(*args):
-        print('debug: i/info/information command output')
+        return 'debug: i/info/information command output'
 
 
 class I(Info):

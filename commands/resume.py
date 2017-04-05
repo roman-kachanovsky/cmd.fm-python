@@ -11,4 +11,4 @@ class Resume(Command):
 
     @staticmethod
     def handle(*args):
-        print('debug: resume command output')
+        return 'debug: resume command output'

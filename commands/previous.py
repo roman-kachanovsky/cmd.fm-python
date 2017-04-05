@@ -11,7 +11,7 @@ class Previous(Command):
 
     @staticmethod
     def handle(*args):
-        print('debug: prev/previous/back command output.')
+        return 'debug: prev/previous/back command output.'
 
 
 class Prev(Previous):

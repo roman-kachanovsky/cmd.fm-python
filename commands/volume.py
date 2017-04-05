@@ -11,7 +11,7 @@ class Volume(Command):
 
     @staticmethod
     def handle(*args):
-        print('debug: volume/v/vol command output')
+        return 'debug: volume/v/vol command output'
 
 
 class V(Volume):

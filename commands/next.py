@@ -11,7 +11,7 @@ class Next(Command):
 
     @staticmethod
     def handle(*args):
-        print('debug: next/skip command output')
+        return 'debug: next/skip command output'
 
 
 class Skip(Next):

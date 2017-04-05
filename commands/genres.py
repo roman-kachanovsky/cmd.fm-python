@@ -11,4 +11,4 @@ class Genres(Command):
 
     @staticmethod
     def handle(*args):
-        print('debug: genres command output')
+        return 'debug: genres command output'
