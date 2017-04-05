@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-import sys
-
 from utils.colorize import colorize, Colors
 
 
@@ -10,6 +8,7 @@ class Command(object):
     pattern = ''
     example = []
     description = ''
+    show_in_main_help = True
 
     @staticmethod
     def handle(*args):
@@ -34,48 +33,15 @@ class Command(object):
 
     @classmethod
     def one_line_help(cls):
-        return '{:<15} - {}{}{}'.format(
+        return '{:<15} - {}{}{}\n'.format(
             cls.pattern,
             colorize(Colors.GREEN, cls.description),
             colorize(Colors.GRAY, ' Example: ' if len(cls.example) == 1 else ' Examples: '),
             colorize(Colors.GRAY, ' | ').join(cls.example)
-        )
+        ) if cls.show_in_main_help else ''
 
     @classmethod
     def bind_help(cls):
         def fn(*args):
             return cls.help()
         return 'help_' + cls.name, fn
-
-
-class Genres(Command):
-    name = 'genres'
-    pattern = 'genres'
-    example = ('genres',)
-    description = 'Lists all available genres'
-
-    @staticmethod
-    def handle(*args):
-        print('debug: genres command output')
-
-
-class Play(Command):
-    name = 'play'
-    pattern = 'play {o}'
-    example = ('play chillout', 'play username/playlist',)
-    description = 'Use this command to play genres and resume paused track'
-
-    @staticmethod
-    def handle(*args):
-        print('debug: play command output')
-
-
-class Quit(Command):
-    name = 'quit'
-    pattern = 'quit'
-    example = ('quit',)
-    description = 'Close cmd.fm and turn off music'
-
-    @staticmethod
-    def handle(*args):
-        sys.exit()

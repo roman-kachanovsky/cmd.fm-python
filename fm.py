@@ -1,16 +1,11 @@
 #!/usr/bin/env python
-from __future__ import unicode_literals
+
+from __future__ import unicode_literals, print_function
 
 import cmd
 
-import commands as cmds
+from commands import commands
 from utils.colorize import colorize, Colors
-
-commands = [
-    cmds.Genres,
-    cmds.Play,
-    cmds.Quit,
-]
 
 
 class Fm(cmd.Cmd):
@@ -51,7 +46,7 @@ class Fm(cmd.Cmd):
             fn()
         else:
             for command in commands:
-                print(command.one_line_help())
+                print(command.one_line_help(), end='')
 
     def default(self, arg):
         print(colorize(Colors.RED, 'Unknown command ') + arg)
