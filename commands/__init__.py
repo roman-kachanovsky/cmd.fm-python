@@ -1,9 +1,10 @@
 from __future__ import absolute_import
 
-from . import genres, play, pause, resume, next, previous, info, volume, quit
+from . import help, genres, play, pause, resume, next, previous, info, volume, quit
 
 
 commands = [
+    help.Help,
     genres.Genres,
     play.Play,
     play.P,

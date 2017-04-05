@@ -12,7 +12,7 @@ class Quit(Command):
     description = 'Close cmd.fm and turn off music.'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         sys.exit()
 
 

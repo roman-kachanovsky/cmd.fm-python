@@ -10,7 +10,7 @@ class Play(Command):
     description = 'Use this command to play genres and resume paused track.'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         return 'debug: play/p command output'
 
 

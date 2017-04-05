@@ -10,7 +10,7 @@ class Next(Command):
     description = 'Skips next track.'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         return 'debug: next/skip command output'
 
 

@@ -10,7 +10,7 @@ class Volume(Command):
     description = 'Set volume level in percentage.'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         return 'debug: volume/v/vol command output'
 
 

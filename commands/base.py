@@ -11,7 +11,7 @@ class Command(object):
     show_in_main_help = True
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         raise NotImplementedError
 
     @classmethod

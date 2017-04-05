@@ -10,5 +10,5 @@ class Genres(Command):
     description = 'Lists all available genres.'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         return 'debug: genres command output'

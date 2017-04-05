@@ -10,7 +10,7 @@ class Previous(Command):
     description = 'Skips previous track'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         return 'debug: prev/previous/back command output.'
 
 

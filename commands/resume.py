@@ -10,5 +10,5 @@ class Resume(Command):
     description = 'Resume paused playback.'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         return 'debug: resume command output'

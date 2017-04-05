@@ -10,7 +10,7 @@ class Info(Command):
     description = 'Shows more information about current track.'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         return 'debug: i/info/information command output'
 
 

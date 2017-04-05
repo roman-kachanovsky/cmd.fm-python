@@ -10,5 +10,5 @@ class Pause(Command):
     description = 'Pause playback.'
 
     @staticmethod
-    def handle(*args):
+    def handle(self, *args):
         return 'debug: pause command output'

@@ -29,7 +29,7 @@ class Fm(cmd.Cmd):
     @classmethod
     def _bind_handler(cls, cmd):
         def fn(self, *args):
-            self.stdout_print(cmd.handle())
+            self.stdout_print(cmd.handle(self, *args))
         setattr(cls, 'do_' + cmd.name, fn)
 
     @classmethod
@@ -43,25 +43,10 @@ class Fm(cmd.Cmd):
             Fm._bind_handler(command)
             Fm._bind_help(command)
         cmd.Cmd.__init__(self, *args, **kwargs)
+        self.commands = commands
 
     def stdout_print(self, text, end='\n'):
         self.stdout.write(text + end)
-
-    def do_help(self, arg):
-        if arg:
-            try:
-                fn = getattr(self, 'help_' + arg)
-            except AttributeError:
-                self.stdout_print(
-                    colorize(Colors.RED, 'Command ') + colorize(Colors.YELLOW, arg)
-                    + colorize(Colors.RED, ' not found. You can use ')
-                    + 'help' + colorize(Colors.RED, ' command to see all available commands.')
-                )
-                return
-            fn()
-        else:
-            for command in commands:
-                self.stdout_print(command.one_line_help(), end='')
 
     def default(self, arg):
         self.stdout_print(colorize(Colors.RED, 'Unknown command ') + arg)
