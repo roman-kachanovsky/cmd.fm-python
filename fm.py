@@ -53,6 +53,13 @@ class Fm(cmd.Cmd):
             for command in commands:
                 print(command.one_line_help())
 
+    def default(self, arg):
+        print(colorize(Colors.RED, 'Unknown command ') + arg)
+
+    def emptyline(self):
+        # Do not repeat last used command when user entered empty line
+        pass
+
 
 if __name__ == '__main__':
     Fm().cmdloop()
