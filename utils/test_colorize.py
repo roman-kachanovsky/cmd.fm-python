@@ -1,8 +1,8 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, absolute_import
 
 import unittest
 
-from colorize import colorize, Colors
+from .colorize import colorize, Colors
 
 
 class TestFm(unittest.TestCase):
