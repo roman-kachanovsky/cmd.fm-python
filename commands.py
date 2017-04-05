@@ -23,11 +23,13 @@ class Command(object):
 
     @classmethod
     def help(cls):
-        print '{}{}{}\n{}'.format(
-            cls.pattern,
-            colorize(Colors.GRAY, ' - Example: ' if len(cls.example) == 1 else ' - Examples: '),
-            colorize(Colors.GRAY, ' | ').join(cls.example),
-            colorize(Colors.GREEN, cls.description)
+        print(
+            '{}{}{}\n{}'.format(
+                cls.pattern,
+                colorize(Colors.GRAY, ' - Example: ' if len(cls.example) == 1 else ' - Examples: '),
+                colorize(Colors.GRAY, ' | ').join(cls.example),
+                colorize(Colors.GREEN, cls.description)
+            )
         )
 
     @classmethod
@@ -54,7 +56,7 @@ class Genres(Command):
 
     @staticmethod
     def handle(*args):
-        print 'genres command called'
+        print('debug: genres command output')
 
 
 class Play(Command):
@@ -65,7 +67,7 @@ class Play(Command):
 
     @staticmethod
     def handle(*args):
-        print 'play command called'
+        print('debug: play command output')
 
 
 class Quit(Command):

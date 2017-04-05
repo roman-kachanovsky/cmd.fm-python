@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 import cmd
 
 import commands as cmds
-
 from utils.colorize import colorize, Colors
 
 commands = [
@@ -43,14 +42,16 @@ class Fm(cmd.Cmd):
             try:
                 fn = getattr(self, 'help_' + arg)
             except AttributeError:
-                print colorize(Colors.RED, 'Command ') + colorize(Colors.YELLOW, arg) \
-                    + colorize(Colors.RED, ' not found. You can use ') \
+                print(
+                    colorize(Colors.RED, 'Command ') + colorize(Colors.YELLOW, arg)
+                    + colorize(Colors.RED, ' not found. You can use ')
                     + 'help' + colorize(Colors.RED, ' command to see all available commands.')
+                )
                 return
             fn()
         else:
             for command in commands:
-                print command.one_line_help()
+                print(command.one_line_help())
 
 
 if __name__ == '__main__':
