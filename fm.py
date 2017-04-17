@@ -3,12 +3,16 @@
 from __future__ import unicode_literals
 
 import cmd
+import os
 
 from commands import commands
 from utils.colorize import colorize, Colors
+from client.client import DirbleClient
 
 
 class Fm(cmd.Cmd):
+    INDENT = ' ' * 4
+
     prompt = colorize(Colors.LIME, '$ fm ')
     intro = """
                  _   ___
@@ -38,12 +42,15 @@ class Fm(cmd.Cmd):
             self.stdout_print(cmd.help())
         setattr(cls, 'help_' + cmd.name, fn)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, client=None, *args, **kwargs):
         for command in commands:
             Fm._bind_handler(command)
             Fm._bind_help(command)
+
+        self.client = client
         cmd.Cmd.__init__(self, *args, **kwargs)
         self.commands = commands
+        self.intro = self.onecmd('genres withintro')
 
     def stdout_print(self, text, end='\n'):
         self.stdout.write(text + end)
@@ -57,4 +64,12 @@ class Fm(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    Fm().cmdloop()
+    api_key = os.environ.get('DIRBLE_API_KEY')
+
+    if api_key:
+        client = DirbleClient(api_key)
+        Fm(client=client).cmdloop()
+    else:
+        print(colorize(Colors.RED, 'Please, specify your ') +
+              'DIRBLE_API_KEY' +
+              colorize(Colors.RED, ' in environment variables.'))

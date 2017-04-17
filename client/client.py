@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import requests
-
+import string
 
 class DirbleClient(object):
     DOMAIN = 'http://api.dirble.com/v2'
@@ -27,6 +27,18 @@ class DirbleClient(object):
         if response.ok:
             return response.json()
         return []
+
+    @property
+    def genres_titles(self):
+        titles = dict()
+
+        for title in sorted([g.get('title', '') for g in self.genres]):
+            first_letter = title[0].upper()
+            if title[0] in string.digits:
+                first_letter = '#'
+            titles[first_letter] = titles.get(first_letter, list()) + [title]
+
+        return titles
 
     def get_stations(self, category_id):
         response = requests.get(self.build_request_uri(self.STATIONS, category_id))

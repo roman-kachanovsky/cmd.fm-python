@@ -16,7 +16,7 @@ class Command(object):
 
     @classmethod
     def help(cls):
-        return '{}{}{}\n{}'.format(
+        return '    {}{}{}\n    {}'.format(
             cls.pattern,
             colorize(Colors.GRAY, ' - Example: ' if len(cls.example) == 1 else ' - Examples: '),
             colorize(Colors.GRAY, ' | ').join(cls.example),
@@ -25,7 +25,7 @@ class Command(object):
 
     @classmethod
     def one_line_help(cls):
-        return '{:<15} - {}{}{}\n'.format(
+        return '    {:<15} - {}{}{}\n'.format(
             cls.pattern,
             colorize(Colors.GREEN, cls.description),
             colorize(Colors.GRAY, ' Example: ' if len(cls.example) == 1 else ' Examples: '),
