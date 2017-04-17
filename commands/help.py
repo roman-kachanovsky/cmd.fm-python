@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, absolute_import
 
 from .base import Command
-from utils.colorize import colorize, Colors
+from utils.colorize import render
 
 
 class Help(Command):
@@ -18,9 +18,8 @@ class Help(Command):
             for command in self.commands:
                 if arg == command.name:
                     return command.help()
-            return colorize(Colors.RED, 'Command ') + colorize(Colors.YELLOW, arg) \
-                + colorize(Colors.RED, ' not found. You can use ') \
-                + 'help' + colorize(Colors.RED, ' command to see all available commands.')
+            return render(self.INDENT + '{{r}}Command{{e-y}} '+ arg +
+                          ' {{e-r}}not found. You can use{{e}} help {{r}}command to see all available commands.{{e}}')
         else:
             main_help = ''
             for command in self.commands:

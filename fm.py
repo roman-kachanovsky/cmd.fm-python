@@ -6,7 +6,7 @@ import cmd
 import os
 
 from commands import commands
-from utils.colorize import colorize, Colors
+from utils.colorize import render, colorize, Colors
 from client.client import DirbleClient
 
 
@@ -14,22 +14,16 @@ class Fm(cmd.Cmd):
     INDENT = ' ' * 4
 
     prompt = colorize(Colors.LIME, '$ fm ')
-    intro = """
+    intro = render("""
                  _   ___
      ___ _____ _| | |  _|_____
     |  _|     | . |_|  _|     |
     |___|_|_|_|___|_|_| |_|_|_|
     ---------------------------------------------------------------
-    {}: play chillout{} play dubstep {}
-    {} help {}
-    """.format(
-        colorize(Colors.YELLOW, 'Welcome to cmd.fm! Use ') + 'play' +
-        colorize(Colors.YELLOW, ' command to begin listening.\n    For example'),
-        colorize(Colors.YELLOW, ','),
-        colorize(Colors.YELLOW, 'etc...'),
-        colorize(Colors.GRAY, 'You can use'),
-        colorize(Colors.GRAY, 'command to see all cmd.fm commands.')
-    )
+    {{y}}Welcome to cmd.fm! Use{{e}} play {{y}}command to begin listening.
+    For example:{{e}} play chillout{{y}}, {{e}}play dubstep {{y}}etc...
+    {{g}}You can use{{e}} help {{g}}command to see all cmd.fm commands.{{e}}
+    """)
 
     @classmethod
     def _bind_handler(cls, cmd):
@@ -71,6 +65,4 @@ if __name__ == '__main__':
         client = DirbleClient(api_key)
         Fm(client=client).cmdloop()
     else:
-        print(colorize(Colors.RED, 'Please, specify your ') +
-              'DIRBLE_API_KEY' +
-              colorize(Colors.RED, ' in environment variables.'))
+        print(render('{{r}}Please, specify your{{e}} DIRBLE_API_KEY {{r}}in environment variables.{{e}}'))

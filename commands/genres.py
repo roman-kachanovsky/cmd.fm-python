@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, absolute_import
 
 from .base import Command
-from utils.colorize import colorize, Colors
+from utils.colorize import render, colorize, Colors
 
 
 class Genres(Command):
@@ -16,23 +16,17 @@ class Genres(Command):
         titles = self.client.genres_titles
         titles_keys = sorted(titles.keys())
 
-        header = '\n' + self.INDENT + \
-                 colorize(
-                     Colors.YELLOW,
-                     '--- GENRES ----------------------------------------------------'
-                 ) + '\n\n' + self.INDENT
+        header = render('\n' + self.INDENT +
+                        '{{y}}--- GENRES ----------------------------------------------------{{e}}' +
+                        '\n\n' + self.INDENT)
 
-        footer = '\n\n' + self.INDENT + \
-                 colorize(Colors.YELLOW, 'Start listening by typing ') + \
-                 'play {genre}' + \
-                 colorize(Colors.YELLOW, ' command: ') + \
-                 'play kpop\n'
+        footer = render('\n\n' + self.INDENT +
+                        '{{y}}Start listening by typing{{e}} play {genre} {{y}}command: {{e}}play kpop\n')
 
         if arg == 'withintro':
             header = self.intro + header
-            footer = '\n' + self.INDENT + colorize(Colors.LIME, '...') + \
-                colorize(Colors.YELLOW, ' Show more available genres via ') + \
-                'genres' + colorize(Colors.YELLOW, ' command') + footer
+            footer = render('\n' + self.INDENT +
+                            '{{l}}... {{e-y}}Show more available genres via{{e}} genres {{y}}command{{e}}') + footer
 
             titles_keys = titles_keys[:5]  # Trim titles
 
