@@ -20,10 +20,11 @@ class Fm(cmd.Cmd):
     |  _|     | . |_|  _|     |
     |___|_|_|_|___|_|_| |_|_|_|
     ---------------------------------------------------------------
-    {}: play chillout{} play madonna {}
+    {}: play chillout{} play dubstep {}
     {} help {}
     """.format(
-        colorize(Colors.YELLOW, 'Welcome to cmd.fm! Use play command to begin listening.\n    For example'),
+        colorize(Colors.YELLOW, 'Welcome to cmd.fm! Use ') + 'play' +
+        colorize(Colors.YELLOW, ' command to begin listening.\n    For example'),
         colorize(Colors.YELLOW, ','),
         colorize(Colors.YELLOW, 'etc...'),
         colorize(Colors.GRAY, 'You can use'),
@@ -56,7 +57,7 @@ class Fm(cmd.Cmd):
         self.stdout.write(text + end)
 
     def default(self, arg):
-        self.stdout_print(colorize(Colors.RED, 'Unknown command ') + arg)
+        self.stdout_print(self.INDENT + colorize(Colors.RED, 'Unknown command ') + arg)
 
     def emptyline(self):
         # Do not repeat last used command when user entered empty line
