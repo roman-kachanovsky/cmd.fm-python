@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import requests
 import string
 
+
 class DirbleClient(object):
     DOMAIN = 'http://api.dirble.com/v2'
     GENRES = '/categories/{}'
@@ -50,5 +51,5 @@ class DirbleClient(object):
     def search_genre(self, genre_name):
         for genre in self.genres:
             if genre_name.lower() == genre.get('title', '').lower():
-                return genre.get('id', 0)
-        return 0
+                return genre.get('id')
+        return None

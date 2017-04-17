@@ -13,7 +13,6 @@ class Genres(Command):
     @staticmethod
     def handle(self, *args):
         arg = args[0] if args else ''
-
         titles = self.client.genres_titles
 
         header = '\n' + self.INDENT + \
@@ -24,6 +23,10 @@ class Genres(Command):
 
         if arg == 'withintro':
             header = self.intro + header
+
+        if not titles:
+            return header + \
+                   colorize(Colors.RED, 'Genres list is empty. Seems API isn\'t available. Please, try again later.\n')
 
         footer = '\n\n' + self.INDENT + \
                  colorize(Colors.YELLOW, 'Start listening by typing ') + \

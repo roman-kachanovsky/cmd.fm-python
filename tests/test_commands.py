@@ -30,6 +30,10 @@ class TestFm(unittest.TestCase):
         self.assertEqual(self.cli_response(), 'Unknown command wrong_command\n')
         self.mock_stdout.reset_mock()
 
+    def test_genres(self):
+        # TODO: Implement mock dirble client
+        pass
+
     def test_play(self):
         cli = self.create()
         self.assertFalse(cli.onecmd('play'))
