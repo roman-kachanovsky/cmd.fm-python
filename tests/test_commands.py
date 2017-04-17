@@ -17,7 +17,8 @@ class TestFm(unittest.TestCase):
     def create(self):
         return Fm(stdin=self.mock_stdin, stdout=self.mock_stdout)
 
-    def clear_coloring(self, text):
+    @staticmethod
+    def clear_coloring(text):
         return re.sub(r'\033\[[0-9]{1,2}m', '', text)
 
     def cli_response(self):
