@@ -37,7 +37,7 @@ class Fm(cmd.Cmd):
             self.stdout_print(cmd.help())
         setattr(cls, 'help_' + cmd.name, fn)
 
-    def __init__(self, client=None, *args, **kwargs):
+    def __init__(self, client=None, test=False, *args, **kwargs):
         for command in commands:
             Fm._bind_handler(command)
             Fm._bind_help(command)
@@ -45,7 +45,8 @@ class Fm(cmd.Cmd):
         self.client = client
         cmd.Cmd.__init__(self, *args, **kwargs)
         self.commands = commands
-        self.intro = self.onecmd('genres withintro')
+        if not test:
+            self.intro = self.onecmd('genres withintro')
 
     def stdout_print(self, text, end='\n'):
         self.stdout.write(text + end)

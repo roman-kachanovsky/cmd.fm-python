@@ -2,7 +2,7 @@ from __future__ import unicode_literals, absolute_import
 
 import unittest
 
-from utils.colorize import colorize, Colors
+from utils.colorize import render, colorize, Colors
 
 
 class TestColorize(unittest.TestCase):
@@ -13,8 +13,9 @@ class TestColorize(unittest.TestCase):
         self.assertEqual(colorize(Colors.RED, 'test'), '\033[91mtest\033[0m')
 
     def test_render(self):
-        # TODO: Test 'render' function
-        pass
+        self.assertEqual(render('test {{r}}test{{e}} test'), 'test \033[91mtest\033[0m test')
+        self.assertEqual(render('{{y}}test {{e-r}}test{{e}} test'), '\033[93mtest \033[0m\033[91mtest\033[0m test')
+        self.assertEqual(render('{{g}}test{{e}} {{r}}test{{e}} test'), '\033[90mtest\033[0m \033[91mtest\033[0m test')
 
 
 if __name__ == '__main__':

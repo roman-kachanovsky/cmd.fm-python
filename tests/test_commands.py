@@ -7,15 +7,18 @@ import re
 
 from fm import Fm
 
+from .mock_client import MockClient
+
 
 class TestFm(unittest.TestCase):
 
     def setUp(self):
         self.mock_stdin = mock.create_autospec(sys.stdin)
         self.mock_stdout = mock.create_autospec(sys.stdout)
+        self.mock_client = MockClient('test_key')
 
     def create(self):
-        return Fm(stdin=self.mock_stdin, stdout=self.mock_stdout)
+        return Fm(stdin=self.mock_stdin, stdout=self.mock_stdout, client=self.mock_client, test=True)
 
     @staticmethod
     def clear_coloring(text):
@@ -27,21 +30,29 @@ class TestFm(unittest.TestCase):
     def test_wrong_command(self):
         cli = self.create()
         self.assertFalse(cli.onecmd('wrong_command'))
-        self.assertEqual(self.cli_response(), 'Unknown command wrong_command\n')
+        self.assertEqual(self.cli_response(), '    Unknown command wrong_command\n')
         self.mock_stdout.reset_mock()
 
     def test_genres(self):
-        # TODO: Implement mock dirble client
-        pass
-
-    def test_play(self):
         cli = self.create()
-        self.assertFalse(cli.onecmd('play'))
-        self.assertEqual(self.cli_response(), 'debug: play/p command output\n')
+        self.assertFalse(cli.onecmd('genres'))
+        self.assertEqual(self.cli_response(),
+                         '\n    --- GENRES ----------------------------------------------------\n' +
+                         '\n    R - Rock' +
+                         '\n    T - Trance' +
+                         '\n\n    Start listening by typing play {genre} command: play kpop' +
+                         '\n\n'
+                         )
         self.mock_stdout.reset_mock()
-        self.assertFalse(cli.onecmd('p'))
-        self.assertEqual(self.cli_response(), 'debug: play/p command output\n')
-        self.mock_stdout.reset_mock()
+
+    # def test_play(self):
+    #     cli = self.create()
+    #     self.assertFalse(cli.onecmd('play'))
+    #     self.assertEqual(self.cli_response(), 'debug: play/p command output\n')
+    #     self.mock_stdout.reset_mock()
+    #     self.assertFalse(cli.onecmd('p'))
+    #     self.assertEqual(self.cli_response(), 'debug: play/p command output\n')
+    #     self.mock_stdout.reset_mock()
 
     def test_quit(self):
         cli = self.create()
