@@ -36,13 +36,10 @@ class TestFm(unittest.TestCase):
     def test_genres(self):
         cli = self.create()
         self.assertFalse(cli.onecmd('genres'))
-        self.assertEqual(self.cli_response(),
-                         '\n    --- GENRES ----------------------------------------------------\n' +
-                         '\n    R - Rock' +
-                         '\n    T - Trance' +
-                         '\n\n    Start listening by typing play {genre} command: play kpop' +
-                         '\n\n'
-                         )
+        cli_response = self.cli_response()
+        self.assertTrue('- GENRES -' in cli_response)  # First line
+        self.assertTrue('R - Rock' in cli_response)  # Genre
+        self.assertTrue('play {genre}' in cli_response)  # Last line
         self.mock_stdout.reset_mock()
 
     # def test_play(self):
