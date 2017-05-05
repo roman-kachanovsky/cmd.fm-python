@@ -13,6 +13,8 @@ class Quit(Command):
 
     @staticmethod
     def handle(self, *args):
+        if self.player:
+            self.player.stop()
         sys.exit()
 
 

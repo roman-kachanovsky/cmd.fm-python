@@ -43,6 +43,7 @@ class Fm(cmd.Cmd):
             Fm._bind_help(command)
 
         self.client = client
+        self.player = None
         cmd.Cmd.__init__(self, *args, **kwargs)
         self.commands = commands
         if not test:
@@ -60,6 +61,7 @@ class Fm(cmd.Cmd):
 
 
 if __name__ == '__main__':
+    os.environ['VLC_VERBOSE'] = '-1'  # Hide libvlc debug messages
     api_key = os.environ.get('DIRBLE_API_KEY')
 
     if api_key:

@@ -92,7 +92,7 @@ class DirbleClient(object):
         return self.active_station['streams'][0].get('stream', '') \
             if self.active_station and len(self.active_station.get('streams', [])) else ''
 
-    def get_stream(self, category_id):
-        if not self.active_station or self.current_category_id != category_id:
-            self.update_active_station(category_id)
+    def get_stream(self, category_id, renew_active_station=False):
+        if not self.active_station or self.current_category_id != category_id or renew_active_station:
+            return self.stream_url if self.update_active_station(category_id) else ''
         return self.stream_url

@@ -1,9 +1,11 @@
 from __future__ import unicode_literals, absolute_import
 
 import random
+import time
 
 from .base import Command
 from utils.colorize import colorize, Colors
+from player.player import Player
 
 
 class Play(Command):
@@ -17,8 +19,10 @@ class Play(Command):
         arg = args[0] if args else ''
 
         if not arg:
-            # TODO: Check here if we have paused stream and resume it instead choosing of random genre
-            # Pick random genre
+            if self.player and self.player.is_paused:
+                self.player.play()
+                return self.INDENT + colorize(Colors.BLUE, '\u25B6 ' + self.client.active_station['name'])
+
             self.stdout_print(self.INDENT + colorize(Colors.GRAY, 'Pick random genre...'))
             arg = random.choice([genre.get('title', '') for genre in self.client.genres])
 
@@ -31,12 +35,26 @@ class Play(Command):
         self.stdout_print(self.INDENT + colorize(Colors.GREEN, 'Tuning in...'))
         self.stdout_print(self.INDENT + colorize(Colors.GREEN, 'Starting genre: ') + genre.get('title', ''))
 
-        stream = self.client.get_stream(genre_id)
+        num_of_tries = 0
+        while num_of_tries < 3:
+            num_of_tries += 1
+            stream = self.client.get_stream(genre_id, renew_active_station=True)
 
-        if not stream:
-            return self.INDENT + colorize(Colors.RED, 'No active stations found... Please, try another genre.')
-        # TODO: Start playing here...
-        return self.INDENT + colorize(Colors.BLUE, '\u25B6 ' + self.client.active_station['name'])
+            if not stream:
+                return self.INDENT + colorize(Colors.RED, 'No active stations found... Please, try another genre.')
+
+            if self.player:
+                self.player.stop()
+            self.player = Player(stream)
+            self.player.play()
+
+            num_of_checks = 0
+            while num_of_checks < 5:
+                num_of_checks += 1
+                time.sleep(1)
+                if self.player.is_playing:
+                    return self.INDENT + colorize(Colors.BLUE, '\u25B6 ' + self.client.active_station['name'])
+        return self.INDENT + colorize(Colors.RED, 'No active stations found... Please, try another genre.')
 
 
 class P(Play):
