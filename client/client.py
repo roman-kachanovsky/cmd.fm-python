@@ -49,7 +49,7 @@ class DirbleClient(object):
         return []
 
     def search_genre(self, genre_name):
-        for genre in self.genres:
-            if genre_name.lower() == genre.get('title', '').lower():
+        for genre in sorted(self.genres, key=lambda x: (len(x.get('title', '')), x.get('title', ''))):
+            if genre_name.lower() in genre.get('title', '').lower():
                 return genre.get('id')
         return None

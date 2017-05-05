@@ -25,6 +25,8 @@ class TestFm(unittest.TestCase):
         self.assertEqual(self.client.search_genre('rock'), 2)
         self.assertEqual(self.client.search_genre('dancehall'), 4)
         self.assertEqual(self.client.search_genre('wrong_genre'), None)
+        self.assertEqual(self.client.search_genre('ock'), 2)  # Partial search
+        self.assertEqual(self.client.search_genre('ance'), 3)  # Partial search in sorted data
 
 
 if __name__ == '__main__':
