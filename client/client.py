@@ -16,11 +16,11 @@ class DirbleClient(object):
         self.genres = self.get_genres()
 
     @property
-    def token(self):
+    def _uri_token(self):
         return '?token={}'.format(self.api_key)
 
     def build_request_uri(self, endpoint, arg=''):
-        return self.DOMAIN + endpoint.format(arg) + self.token
+        return self.DOMAIN + endpoint.format(arg) + self._uri_token
 
     def get_genres(self):
         response = requests.get(self.build_request_uri(self.GENRES))
